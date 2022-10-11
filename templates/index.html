@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% block title %} Welcome to Meal Plan Calculator {% endblock %}</h1>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li><strong>Error:</strong> {{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+<form method="post">
+    <div class="form-group">
+        <label for="title">Meal Plan Starting Date</label>
+        <input type="text" name="start_date"
+               placeholder="Start Date (DDMMYYYY) Defaults to 03092022" class="form-control"
+               value="{{ request.form['start_date'] }}"></input>
+    </div>
+
+    <div class="form-group">
+        <label for="title">Meal Plan Ending Date</label>
+        <input type="text" name="end_date"
+               placeholder="End Date (DDMMYYYY) Defaults to 28042023" class="form-control"
+               value="{{ request.form['end_date'] }}"></input>
+    </div>
+
+    <div class="form-group">
+        <label for="title">Meal Plan</label><span style="color:red">*</span>
+            <select type="text" name="meal_plan" class="form-control">
+              {% for o in data %}
+              <option value="{{ o.meal_plan }}">{{ o.meal_plan }}</option>
+              {% endfor %}
+            </select>
+    </div>
+
+    <div class="form-group">
+        <label for="title">Current Balance</label><span style="color:red">*</span>
+        <input type="text" name="current_balance"
+               placeholder="Current Balance" class="form-control"
+               value="{{ request.form['current_balance'] }}" required></input>
+    </div>
+
+    <label>Required spending rate: ${{ spending['required'] }}/day</label>
+    <br>
+    <label>Current spending rate: ${{ spending['current'] }}/day</label>
+
+<!--    <div class="form-group">-->
+<!--        <label for="content">Content</label>-->
+<!--        <textarea name="content" placeholder="Post content"-->
+<!--                  class="form-control">{{ request.form['content'] }}</textarea>-->
+<!--    </div>-->
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+{% endblock %}
